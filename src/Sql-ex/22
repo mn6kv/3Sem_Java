@@ -1,0 +1,3 @@
+select speed, avg(price) from pc
+group by speed
+having (speed>600)

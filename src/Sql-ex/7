@@ -1,0 +1,15 @@
+select PC.model, price
+from Product join PC on Product.model = PC.model
+where maker = 'B'
+
+union
+
+select Laptop.model, price
+from Product join Laptop on Product.model = Laptop.model
+where maker = 'B'
+
+union
+
+select Printer.model, price
+from Product join Printer on Product.model = Printer.model
+where maker = 'B'

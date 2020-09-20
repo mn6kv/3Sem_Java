@@ -1,0 +1,3 @@
+select maker, price
+from Product join Printer on Product.model = Printer.model
+where price = (select min(price) from Printer where color = 'y') and color = 'y'

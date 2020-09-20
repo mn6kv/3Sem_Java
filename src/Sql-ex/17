@@ -1,0 +1,3 @@
+select distinct type, Laptop.model, speed
+from Laptop join Product on Laptop.model = Product.model
+where speed > all(select speed from PC)
