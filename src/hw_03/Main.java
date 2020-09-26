@@ -6,7 +6,7 @@ import java.util.Optional;
 public class Main {
 
     private static final String DB_USERNAME = "postgres";
-    private static final String DB_PASSWORD = "1815144981Misha!";
+    private static final String DB_PASSWORD = "";
     private static final String DB_URL = "jdbc:postgresql://localhost:5432/db-infa-2k";
 
     public static void main(String[] args) throws SQLException {
