@@ -22,8 +22,9 @@ public class SimpleHtmlServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) {
 
         try {
-            Connection connection = DriverManager.getConnection(DB_URL, DB_USERNAME, DB_PASSWORD);
             Class.forName("org.postgresql.Driver");
+            Connection connection = DriverManager.getConnection(DB_URL, DB_USERNAME, DB_PASSWORD);
+
             String username = request.getParameter("name_input");
             String password = request.getParameter("password_input");
 
