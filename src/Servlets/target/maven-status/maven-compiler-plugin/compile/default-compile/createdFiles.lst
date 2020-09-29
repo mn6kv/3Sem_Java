@@ -1,1 +1,4 @@
-SimpleHtmlServlet.class
+models\User.class
+models\User$UserBuilder.class
+servlets\UsersServlet.class
+servlets\SimpleHtmlServlet.class
