@@ -18,17 +18,17 @@
 <table>
     <tr>
         <th>id</th>
-        <th>FirstName</th>
-        <th>LastName</th>
-        <th>Age</th>
+        <th>name</th>
+        <th>password</th>
+        <th>age</th>
     </tr>
 
     <% List<User> users = (List<User>)request.getAttribute("UsersForJSP");
         for (int i = 0; i < users.size(); i++){%>
     <tr>
         <td><%=users.get(i).getId()%></>
-        <td><%=users.get(i).getFirstName()%></>
-        <td><%=users.get(i).getLastName()%></>
+        <td><%=users.get(i).getName()%></>
+        <td><%=users.get(i).getPassword()%></>
         <td><%=users.get(i).getAge()%></>
     </tr>
     <%}%>
