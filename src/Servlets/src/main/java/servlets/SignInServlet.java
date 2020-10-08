@@ -55,7 +55,6 @@ public class SignInServlet extends HttpServlet {
         String password = request.getParameter("password_input");
         Integer age = Integer.valueOf(request.getParameter("age_input"));
 
-        // TODO: сохранить UUID в базу
         if (usersRepository.isUserExist(username, password) && !usersRepository.ifUserHasUuid(username, password)) {
             String uuid = UUID.randomUUID().toString();
             response.addCookie(new Cookie("sign", uuid));
