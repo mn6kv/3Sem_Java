@@ -1,4 +1,8 @@
-models\User.class
+repositories\CrudRepository.class
 models\User$UserBuilder.class
 servlets\UsersServlet.class
+models\User.class
+repositories\UsersRepository.class
+servlets\SignInServlet.class
+repositories\UsersRepositoryJdbcImpl.class
 servlets\SimpleHtmlServlet.class
