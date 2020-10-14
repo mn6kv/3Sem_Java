@@ -55,12 +55,22 @@ public class SignInServlet extends HttpServlet {
         String password = request.getParameter("password_input");
         Integer age = Integer.valueOf(request.getParameter("age_input"));
 
-        if (usersRepository.isUserExist(username, password) && !usersRepository.ifUserHasUuid(username, password)) {
+        if (!usersRepository.isUserExist(username, password)) {
+
+            User user = User.builder()
+                    .name(username)
+                    .password(password)
+                    .age(age)
+                    .UUID(UUID.randomUUID().toString())
+                    .build();
+
+            usersRepository.save(user);
+
+        } else if (!usersRepository.ifUserHasUuid(username, password)) {
             String uuid = UUID.randomUUID().toString();
             response.addCookie(new Cookie("sign", uuid));
             usersRepository.saveUUIDtoExistingUser(username, password, uuid);
-        }
-        else {
+        } else {
             String usersUiid = usersRepository.getUsersUuid(username, password);
             if (usersUiid != null)
                 response.addCookie(new Cookie("sign", usersUiid));

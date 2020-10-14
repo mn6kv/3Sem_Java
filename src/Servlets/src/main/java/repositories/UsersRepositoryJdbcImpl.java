@@ -16,7 +16,7 @@ public class UsersRepositoryJdbcImpl implements UsersRepository {
     private static final String SQL_IS_USER_EXIST = "select exists (select * from first_servlet_db " +
             "where name = ? and password = ?)";
     //language=SQL
-    private static final String SQL_SAVE_USER = "insert in first_servlet_db(name, password, age, uuid) " +
+    private static final String SQL_SAVE_USER = "insert into first_servlet_db(name, password, age, uuid) " +
             "values(?, ?, ?, ?)";
     //language=SQL
     private static final String SQL_ADD_UUID = "update first_servlet_db set " + "uuid = ? where name = ? and password = ?";
@@ -106,7 +106,7 @@ public class UsersRepositoryJdbcImpl implements UsersRepository {
             PreparedStatement preparedStatement = connection.prepareStatement(SQL_SAVE_USER);
             preparedStatement.setString(1, user.getName());
             preparedStatement.setString(2, user.getPassword());
-            preparedStatement.setString(3, Integer.toString(user.getAge()));
+            preparedStatement.setInt(3, user.getAge());
             preparedStatement.setString(4, user.getUUID());
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
