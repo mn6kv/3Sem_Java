@@ -1,6 +1,10 @@
+connection\ProjectConnector.class
+models\NameRefactorer.class
 repositories\CrudRepository.class
 models\User$UserBuilder.class
 servlets\UsersServlet.class
+servlets\SearchServlet.class
+models\NameRefactorer$NameRefactorerBuilder.class
 models\User.class
 repositories\UsersRepository.class
 servlets\SignInServlet.class

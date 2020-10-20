@@ -4,4 +4,7 @@ D:\Ucheba\3Sem_Java\src\Servlets\src\main\java\servlets\SimpleHtmlServlet.java
 D:\Ucheba\3Sem_Java\src\Servlets\src\main\java\repositories\CrudRepository.java
 D:\Ucheba\3Sem_Java\src\Servlets\src\main\java\repositories\UsersRepositoryJdbcImpl.java
 D:\Ucheba\3Sem_Java\src\Servlets\src\main\java\servlets\SignInServlet.java
+D:\Ucheba\3Sem_Java\src\Servlets\src\main\java\models\NameRefactorer.java
+D:\Ucheba\3Sem_Java\src\Servlets\src\main\java\servlets\SearchServlet.java
+D:\Ucheba\3Sem_Java\src\Servlets\src\main\java\connection\ProjectConnector.java
 D:\Ucheba\3Sem_Java\src\Servlets\src\main\java\servlets\UsersServlet.java

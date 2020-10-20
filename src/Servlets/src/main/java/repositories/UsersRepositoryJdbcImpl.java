@@ -30,10 +30,44 @@ public class UsersRepositoryJdbcImpl implements UsersRepository {
     private static final String SQL_GET_UUID = "select uuid from first_servlet_db "
             + "where name = ? and password = ?";
 
+    //language=SQl
+    private static final String SQL_GET_USER_BY_NAME =
+            "select * from first_servlet_db " + "where name = ?";
+
     private Connection connection;
 
     public UsersRepositoryJdbcImpl(Connection connection) {
         this.connection = connection;
+    }
+
+    private List<User> getUsersByResultSet(ResultSet result) {
+        try {
+        List<User> users = new ArrayList<>();
+
+        while (result.next()) {
+            users.add(User.builder().
+                    id(result.getLong("id")).
+                    name(result.getString("name")).
+                    password(result.getString("password")).
+                    age(result.getInt("age")).
+                    build());
+        }
+            return users;
+        } catch (SQLException e) {
+            throw new IllegalArgumentException(e);
+        }
+    }
+
+    @Override
+    public List<User> findByName(String name) {
+        try {
+        PreparedStatement preparedStatement = connection.prepareStatement(SQL_GET_USER_BY_NAME);
+        preparedStatement.setString(1, name);
+        ResultSet resultSet = preparedStatement.executeQuery();
+        return getUsersByResultSet(resultSet);
+        } catch (SQLException e) {
+            throw new IllegalArgumentException(e);
+        }
     }
 
     @Override
