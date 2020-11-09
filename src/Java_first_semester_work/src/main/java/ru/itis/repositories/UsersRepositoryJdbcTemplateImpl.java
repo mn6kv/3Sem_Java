@@ -3,6 +3,7 @@ package ru.itis.repositories;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
+import ru.itis.dto.SessionDto;
 import ru.itis.models.User;
 
 import javax.sql.DataSource;
@@ -19,6 +20,14 @@ public class UsersRepositoryJdbcTemplateImpl implements UsersRepository {
     private static final String SQL_FIND_ALL = "select * from account";
     //language=SQL
     private static final String SQL_SAVE = "insert into account (email, name, hash_password, uuid) values (?, ?, ?, ?)";
+    //language=SQL
+    private static final String SQL_FIND_SESSION_BY_USER_ID = "select id, session from account where id = ?";
+    //language=SQL
+    private static final String SQL_ADD_SESSION_TO_USER = "update account set session = ? where id = ?";
+    //language=SQL
+    private static final String SQL_FIND_SESSION_BY_SESSION_ID = "select id, session from account where session = ?";
+    //language=SQL
+    private static final String SQL_FIND_USER_BY_ID = "select * from account where id = ?";
 
     private RowMapper<User> userRowMapper = (row, rowNumber) -> {
         return User.builder()
@@ -26,7 +35,14 @@ public class UsersRepositoryJdbcTemplateImpl implements UsersRepository {
                 .email(row.getString("email"))
                 .name(row.getString("name"))
                 .hashPassword(row.getString("hash_password"))
-                .UUID(row.getString("uuid"))
+                .session(row.getString("session"))
+                .build();
+    };
+
+    private RowMapper<SessionDto> sessionDtoRowMapper = (row, rowMapper) -> {
+        return SessionDto.builder()
+                .userId(row.getLong("id"))
+                .sessionId(row.getString("session"))
                 .build();
     };
 
@@ -44,13 +60,46 @@ public class UsersRepositoryJdbcTemplateImpl implements UsersRepository {
     }
 
     @Override
+    public Optional<User> findUserById(Long id) {
+        try {
+            return Optional.of(jdbcTemplate.queryForObject(SQL_FIND_USER_BY_ID, userRowMapper, id));
+        } catch (EmptyResultDataAccessException e) {
+            return Optional.empty();
+        }
+    }
+
+    @Override
+    public Optional<SessionDto> findSessionByUserId(Long userId) {
+        try {
+            return Optional.of(jdbcTemplate.queryForObject(SQL_FIND_SESSION_BY_USER_ID, sessionDtoRowMapper, userId));
+        } catch (EmptyResultDataAccessException e) {
+            return Optional.empty();
+        }
+    }
+
+    @Override
+    public Optional<SessionDto> findSessionBySessionId(String sessionId) {
+        try {
+            return Optional.of(jdbcTemplate.queryForObject(SQL_FIND_SESSION_BY_SESSION_ID, sessionDtoRowMapper, sessionId));
+        } catch (EmptyResultDataAccessException e) {
+            return Optional.empty();
+        }
+    }
+
+    @Override
+    public void addSessionToUser(Long id, String session) {
+        //"update account set session = ? where id = ?"
+        jdbcTemplate.update(SQL_ADD_SESSION_TO_USER, session, id);
+    }
+
+    @Override
     public void save(User entity) {
         //"insert into account (id, email, name, hash_password, uuid) values (?, ?, ?, ?, ?)"
         jdbcTemplate.update(SQL_SAVE,
                 entity.getEmail(),
                 entity.getName(),
                 entity.getHashPassword(),
-                entity.getUUID());
+                entity.getSession());
     }
 
     @Override

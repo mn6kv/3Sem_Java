@@ -1,7 +1,6 @@
 package ru.itis.services;
 
 import lombok.Data;
-import lombok.Getter;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import ru.itis.dto.UserForm;
 import ru.itis.models.User;
@@ -19,20 +18,18 @@ public class SignUpServiceImpl implements SignUpService {
     }
 
     @Override
-    public void signUp(UserForm userForm, String uuid) {
+    public void signUp(UserForm userForm, String session) {
         User user = User.builder()
                 .email(userForm.getEmail())
                 .name(userForm.getName())
                 .hashPassword(passwordEncoder.encode(userForm.getPassword()))
-                .UUID(uuid)
+                .session(session)
                 .build();
         usersRepository.save(user);
     }
 
     @Override
     public boolean isExistByEmail(String email) {
-        if (usersRepository.findByEmail(email).isEmpty())
-            return false;
-        return true;
+        return usersRepository.findByEmail(email).isPresent();
     }
 }

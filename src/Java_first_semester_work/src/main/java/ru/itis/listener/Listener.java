@@ -5,10 +5,9 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import ru.itis.repositories.UsersRepository;
 import ru.itis.repositories.UsersRepositoryJdbcTemplateImpl;
-import ru.itis.services.SignInService;
-import ru.itis.services.SignInServiceImpl;
-import ru.itis.services.SignUpService;
-import ru.itis.services.SignUpServiceImpl;
+import ru.itis.services.*;
+import ru.itis.util.SessionUtil;
+import ru.itis.util.UserUtil;
 
 import javax.servlet.ServletContext;
 import javax.servlet.ServletContextEvent;
@@ -19,6 +18,7 @@ import javax.servlet.annotation.WebListener;
 public class Listener implements ServletContextListener {
     @Override
     public void contextInitialized(ServletContextEvent servletContextEvent) {
+
         ServletContext servletContext = servletContextEvent.getServletContext();
 
 
@@ -32,9 +32,13 @@ public class Listener implements ServletContextListener {
         UsersRepository usersRepository = new UsersRepositoryJdbcTemplateImpl(dataSource);
         SignInService signInService = new SignInServiceImpl(usersRepository, passwordEncoder);
         SignUpService signUpService = new SignUpServiceImpl(usersRepository, passwordEncoder);
+        SessionUtil sessionUtil = new SessionUtil(usersRepository);
+        UserUtil userUtil = new UserUtil(usersRepository);
 
         servletContext.setAttribute("signInService", signInService);
         servletContext.setAttribute("signUpService", signUpService);
+        servletContext.setAttribute("sessionUtil", sessionUtil);
+        servletContext.setAttribute("userUtil", userUtil);
     }
 
     @Override

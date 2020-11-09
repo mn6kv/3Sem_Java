@@ -12,5 +12,5 @@ public class User {
     private String email;
     private  String name;
     private String hashPassword;
-    private String UUID;
+    private String session;
 }

@@ -1,15 +1,16 @@
 package ru.itis.dto;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import ru.itis.models.User;
+
+import java.util.Optional;
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
+@EqualsAndHashCode
+@ToString
 public class UserDto {
     private Long id;
     private String email;
@@ -21,5 +22,13 @@ public class UserDto {
                 .email(user.getEmail())
                 .name(user.getName())
                 .build();
+    }
+
+    public static UserDto fromOptional(Optional<UserDto> optionalUserDto) {
+        return optionalUserDto.orElse(null);
+    }
+
+    public static User userFromOptional(Optional<User> optionalUser) {
+        return optionalUser.orElse(null);
     }
 }

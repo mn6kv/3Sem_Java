@@ -24,7 +24,7 @@ public class SignInServiceImpl implements SignInService {
         if (userOptional.isPresent()) {
             User user = userOptional.get();
             if (passwordEncoder.matches(userForm.getPassword(), user.getHashPassword())) {
-                UserDto.from(user);
+                return UserDto.from(user);
             } else return null;
         }
         return null;
